@@ -70,6 +70,18 @@ app.post("/posts", async (req, res) => {
   }
 });
 
+app.get("/posts", async (req, res) => {
+  
+  try {
+    const posts = await Post.findAll( {include: [User]});
+
+    return res.json(posts);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json(err);
+  }
+});
+
 
 app.listen({ port: 5000 }, async () => {
   console.log("Server up on http://localhost:5000");
